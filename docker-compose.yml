@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  gesture-controller:
+    build: .
+    container_name: intent_gated_gesture_controller
+    devices:
+      - "/dev/video0:/dev/video0"
+    environment:
+      - DISPLAY=${DISPLAY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET:-fyp-gesture-controller-telemetry}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./logs:/app/logs
+    network_mode: host
